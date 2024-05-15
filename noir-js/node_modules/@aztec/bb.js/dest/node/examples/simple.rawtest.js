@@ -1,0 +1,29 @@
+import { Crs } from '../crs/index.js';
+import createDebug from 'debug';
+import { Barretenberg } from '../barretenberg/index.js';
+import { RawBuffer } from '../types/index.js';
+createDebug.enable('*');
+const debug = createDebug('simple_test');
+async function main() {
+    const CIRCUIT_SIZE = 2 ** 19;
+    debug('starting test...');
+    const api = await Barretenberg.new();
+    // Important to init slab allocator as first thing, to ensure maximum memory efficiency.
+    await api.commonInitSlabAllocator(CIRCUIT_SIZE);
+    // Plus 1 needed!
+    const crs = await Crs.new(CIRCUIT_SIZE + 1);
+    await api.srsInitSrs(new RawBuffer(crs.getG1Data()), crs.numPoints, new RawBuffer(crs.getG2Data()));
+    const iterations = 10;
+    let totalTime = 0;
+    for (let i = 0; i < iterations; ++i) {
+        const start = new Date().getTime();
+        debug(`iteration ${i} starting...`);
+        await api.examplesSimpleCreateAndVerifyProof();
+        totalTime += new Date().getTime() - start;
+    }
+    await api.destroy();
+    debug(`avg iteration time: ${totalTime / iterations}ms`);
+    debug('test complete.');
+}
+void main();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2ltcGxlLnJhd3Rlc3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvZXhhbXBsZXMvc2ltcGxlLnJhd3Rlc3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLEdBQUcsRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQ3RDLE9BQU8sV0FBVyxNQUFNLE9BQU8sQ0FBQztBQUNoQyxPQUFPLEVBQUUsWUFBWSxFQUFFLE1BQU0sMEJBQTBCLENBQUM7QUFDeEQsT0FBTyxFQUFFLFNBQVMsRUFBRSxNQUFNLG1CQUFtQixDQUFDO0FBRTlDLFdBQVcsQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLENBQUM7QUFDeEIsTUFBTSxLQUFLLEdBQUcsV0FBVyxDQUFDLGFBQWEsQ0FBQyxDQUFDO0FBRXpDLEtBQUssVUFBVSxJQUFJO0lBQ2pCLE1BQU0sWUFBWSxHQUFHLENBQUMsSUFBSSxFQUFFLENBQUM7SUFFN0IsS0FBSyxDQUFDLGtCQUFrQixDQUFDLENBQUM7SUFDMUIsTUFBTSxHQUFHLEdBQUcsTUFBTSxZQUFZLENBQUMsR0FBRyxFQUFFLENBQUM7SUFFckMsd0ZBQXdGO0lBQ3hGLE1BQU0sR0FBRyxDQUFDLHVCQUF1QixDQUFDLFlBQVksQ0FBQyxDQUFDO0lBRWhELGlCQUFpQjtJQUNqQixNQUFNLEdBQUcsR0FBRyxNQUFNLEdBQUcsQ0FBQyxHQUFHLENBQUMsWUFBWSxHQUFHLENBQUMsQ0FBQyxDQUFDO0lBQzVDLE1BQU0sR0FBRyxDQUFDLFVBQVUsQ0FBQyxJQUFJLFNBQVMsQ0FBQyxHQUFHLENBQUMsU0FBUyxFQUFFLENBQUMsRUFBRSxHQUFHLENBQUMsU0FBUyxFQUFFLElBQUksU0FBUyxDQUFDLEdBQUcsQ0FBQyxTQUFTLEVBQUUsQ0FBQyxDQUFDLENBQUM7SUFFcEcsTUFBTSxVQUFVLEdBQUcsRUFBRSxDQUFDO0lBQ3RCLElBQUksU0FBUyxHQUFHLENBQUMsQ0FBQztJQUNsQixLQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsVUFBVSxFQUFFLEVBQUUsQ0FBQyxFQUFFLENBQUM7UUFDcEMsTUFBTSxLQUFLLEdBQUcsSUFBSSxJQUFJLEVBQUUsQ0FBQyxPQUFPLEVBQUUsQ0FBQztRQUNuQyxLQUFLLENBQUMsYUFBYSxDQUFDLGNBQWMsQ0FBQyxDQUFDO1FBQ3BDLE1BQU0sR0FBRyxDQUFDLGtDQUFrQyxFQUFFLENBQUM7UUFDL0MsU0FBUyxJQUFJLElBQUksSUFBSSxFQUFFLENBQUMsT0FBTyxFQUFFLEdBQUcsS0FBSyxDQUFDO0lBQzVDLENBQUM7SUFFRCxNQUFNLEdBQUcsQ0FBQyxPQUFPLEVBQUUsQ0FBQztJQUVwQixLQUFLLENBQUMsdUJBQXVCLFNBQVMsR0FBRyxVQUFVLElBQUksQ0FBQyxDQUFDO0lBQ3pELEtBQUssQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO0FBQzFCLENBQUM7QUFFRCxLQUFLLElBQUksRUFBRSxDQUFDIn0=

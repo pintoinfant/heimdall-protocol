@@ -1,0 +1,65 @@
+{
+    "noir_version": "0.26.0+c46b164ce56e6a8f81255fb17eb6539bd040f336",
+    "hash": 16127399770099966815,
+    "abi": {
+        "parameters": [
+            {
+                "name": "recorded_value",
+                "type": {
+                    "kind": "integer",
+                    "sign": "unsigned",
+                    "width": 32
+                },
+                "visibility": "private"
+            },
+            {
+                "name": "lower_check_value",
+                "type": {
+                    "kind": "integer",
+                    "sign": "unsigned",
+                    "width": 32
+                },
+                "visibility": "public"
+            },
+            {
+                "name": "higher_check_value",
+                "type": {
+                    "kind": "integer",
+                    "sign": "unsigned",
+                    "width": 32
+                },
+                "visibility": "public"
+            }
+        ],
+        "param_witnesses": {
+            "higher_check_value": [
+                {
+                    "start": 2,
+                    "end": 3
+                }
+            ],
+            "lower_check_value": [
+                {
+                    "start": 1,
+                    "end": 2
+                }
+            ],
+            "recorded_value": [
+                {
+                    "start": 0,
+                    "end": 1
+                }
+            ]
+        },
+        "return_type": null,
+        "return_witnesses": []
+    },
+    "bytecode": "H4sIAAAAAAAA/+1WUW7DIAyF0KTT+jHtBlFPgAM08NerLFp6/yMsbGZ1Ka2q4n5UqiVkTMDYz+YpUvzJZhkfOJfLaHDeE1tmdoO2IvuppLU9al0nQH0ZvbN2HocZDHzpIUzeaeumnQcPzrvvwRsze+vHMIVRB7BmhoML5oDOZH1ckCaF1Nl8U1wV6tUyOpx3BbyT0DrGs9vsW9KSnN+SM6U98oKfTSGOz8KaFJnsUes6gZSsIgFHO4LVZ3cq5rupL87GrPX1xpejvobfnXEOGCcoxpxXjHVlwO//Id9KkrX5c/Z1I56PJFvUnXiR5BlgKdlWnJJkBKjP7mR65A9vzNq43sVzkGTLmHPHWAsG/IokwU2MnPitGfET4vjguXzG3lsTLJn8/v6cpL6WhVpRMj2RH6RWI6dnDAAA",
+    "debug_symbols": "ldJBCsMgEIXhu7y1i1hNY7xK6WKaWhDEhGgLRbx7IyWbkM0sH/N/uykI80TZzzHBFijYW0FaKLaVMq0ZduwFXHzCStVVgZcPDlYP9S6gmX3P7K/MfmD25qyX2uzA6AMYuUB2bCHZ4sIWii00T2zjQ6unR3Dts9rtHaf90baZv8v/Un8=",
+    "file_map": {
+        "47": {
+            "source": "fn main(recorded_value: u32, lower_check_value: pub u32, higher_check_value: pub u32) {\n    if recorded_value >= lower_check_value {\n        assert(recorded_value <= higher_check_value);\n    }\n}\n",
+            "path": "/workspaces/iot-heimdall/circuits/src/main.nr"
+        }
+    }
+}
